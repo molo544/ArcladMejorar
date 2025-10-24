@@ -1,1 +1,0 @@
-import"./chunk-7CGTOI24.js";var e=[{path:"",loadComponent:()=>import("./chunk-7S4XHQ4F.js").then(t=>t.AlertsPage)},{path:"new",loadComponent:()=>import("./chunk-XZ7FENWE.js").then(t=>t.AlertDetailsPage)},{path:":id",loadComponent:()=>import("./chunk-XZ7FENWE.js").then(t=>t.AlertDetailsPage)}];export{e as ALERTS_ROUTES};

@@ -1,1 +1,0 @@
-import{Kb as s,Lb as l,gc as i,jb as a}from"./chunk-32OYX7MF.js";import"./chunk-7CGTOI24.js";var r=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=a({type:t,selectors:[["app-alert-details-page"]],decls:2,vars:0,template:function(e,o){e&1&&(s(0,"p"),i(1,"alert-details-page works!"),l())},encapsulation:2})};export{r as AlertDetailsPage};
