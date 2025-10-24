@@ -339,6 +339,27 @@ $active-bg: #d1fae5;
         display: flex;
         align-items: center;
       }
+
+      .mobile-user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #d1fae5;
+        color: $primary-green;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.875rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        margin-right: 0.5rem;
+
+        &:hover {
+          background-color: #bbf7d0;
+        }
+      }
     }
 
     // Alinear el selector de idioma verticalmente

@@ -98,9 +98,9 @@
         <!-- Grupo derecho: selector idioma + perfil -->
         <div class="toolbar-right">
           <app-language-selector></app-language-selector>
-          <button mat-icon-button [matMenuTriggerFor]="userMenu">
-            <mat-icon>account_circle</mat-icon>
-          </button>
+          <div class="mobile-user-avatar" [matMenuTriggerFor]="userMenu">
+            {{ getUserInitials() }}
+          </div>
         </div>
       </mat-toolbar>
     }

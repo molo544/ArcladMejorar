@@ -143,11 +143,11 @@
 
       .language-code {
         font-size: 0.95rem;
-        color: white; // Blanco solo en mobile
+        color: #1f2937; // Color oscuro por defecto en mobile
       }
 
       .arrow {
-        color: white; // Flecha blanca solo en mobile
+        color: #6b7280; // Color gris oscuro por defecto en mobile
       }
     }
 
@@ -159,6 +159,24 @@
 
         .country-name {
           font-size: 0.9rem;
+        }
+      }
+    }
+  }
+}
+
+// Estilos específicos cuando está en un contexto con fondo oscuro (no login)
+// Este se aplicará cuando el selector esté en páginas con header oscuro
+:host-context(.dark-background) {
+  @media screen and (max-width: 768px) {
+    .language-selector {
+      .selected-language {
+        .language-code {
+          color: white !important;
+        }
+
+        .arrow {
+          color: white !important;
         }
       }
     }

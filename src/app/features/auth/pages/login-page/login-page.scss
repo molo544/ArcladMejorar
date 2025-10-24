@@ -69,6 +69,17 @@ $placeholder-light: #4b855f;
   .form-container {
     max-width: 420px;
 
+    // Logo móvil - solo visible en pantallas pequeñas
+    .mobile-logo {
+      .logo-mobile {
+        height: 80px;
+        width: auto;
+        max-width: 200px;
+        object-fit: contain;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+      }
+    }
+
     .header-text {
       h2 {
         font-size: 1.875rem;
@@ -232,6 +243,15 @@ $placeholder-light: #4b855f;
 
     .form-container {
       max-width: 100%;
+
+      .mobile-logo {
+        margin-bottom: 3.5rem;
+
+        .logo-mobile {
+          height: 70px;
+          max-width: 180px;
+        }
+      }
 
       .header-text {
         margin-bottom: 1.5rem !important;
