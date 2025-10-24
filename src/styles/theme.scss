@@ -1,0 +1,94 @@
+/* Tema personalizado de Arclad usando Angular Material */
+@use '@angular/material' as mat;
+
+// Incluir el core de Material (solo una vez en toda la app)
+@include mat.core();
+
+/* Definir la paleta personalizada de Arclad */
+$arclad-primary-palette: (
+  50: #e8fcef,
+  100: #c6f7d6,
+  200: #a0f2bc,
+  300: #79eda2,
+  400: #5de98e,
+  500: #17cf54,  // Color principal
+  600: #13b346,
+  700: #0f9838,
+  800: #0c7d2d,
+  900: #075c1e,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  )
+);
+
+$arclad-accent-palette: (
+  50: #e8f5f0,
+  100: #c6e6d9,
+  200: #a0d6c0,
+  300: #79c5a7,
+  400: #5db894,
+  500: #4b855f,  // Color de acento
+  600: #3d7050,
+  700: #2f5c41,
+  800: #224832,
+  900: #163423,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  )
+);
+
+/* Crear paletas de Material */
+$arclad-primary: mat.m2-define-palette($arclad-primary-palette, 500);
+$arclad-accent: mat.m2-define-palette($arclad-accent-palette, 500);
+$arclad-warn: mat.m2-define-palette(mat.$m2-red-palette);
+
+/* Crear el tema */
+$arclad-theme: mat.m2-define-light-theme((
+  color: (
+    primary: $arclad-primary,
+    accent: $arclad-accent,
+    warn: $arclad-warn,
+  ),
+  typography: mat.m2-define-typography-config(
+    $font-family: '"Manrope", "Roboto", "Helvetica Neue", sans-serif',
+  ),
+  density: 0,
+));
+
+/* Aplicar el tema a todos los componentes */
+@include mat.all-component-themes($arclad-theme);
+
+/* Variables CSS para usar en componentes */
+:root {
+  --arclad-primary-500: #{mat.m2-get-color-from-palette($arclad-primary, 500)};
+  --arclad-primary-600: #{mat.m2-get-color-from-palette($arclad-primary, 600)};
+  --arclad-primary-50: #{mat.m2-get-color-from-palette($arclad-primary, 50)};
+}
+
+/* Estilos personalizados globales para el botón primary con el verde de Arclad */
+.mat-mdc-raised-button.mat-primary {
+  --mdc-protected-button-container-color: #17cf54 !important;
+  --mdc-protected-button-label-text-color: #112116 !important;
+  
+  &:hover:not([disabled]) {
+    --mdc-protected-button-container-color: #13b346 !important;
+  }
+}

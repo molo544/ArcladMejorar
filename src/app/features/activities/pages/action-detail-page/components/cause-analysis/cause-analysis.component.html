@@ -1,0 +1,19 @@
+<div class="cause-analysis-container">
+  <div class="section-description">
+    <p class="field-label">Explicación del método utilizado</p>
+    <p class="description-text">
+      Explicación del método utilizado para analizar las causas del problema (ej. 5 Porqués, Diagrama de Ishikawa) y los hallazgos de este análisis.
+    </p>
+  </div>
+
+  <div class="categories-grid">
+    <div class="category-card" *ngFor="let category of categories">
+      <h3 class="category-title">{{ category.title }}</h3>
+      <div class="items-container">
+        <div class="cause-item" *ngFor="let item of category.items">
+          <p>{{ item.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

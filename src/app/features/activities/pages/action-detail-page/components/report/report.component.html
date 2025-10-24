@@ -1,0 +1,150 @@
+<div class="report-container">
+  <!-- Header Section -->
+  <div class="report-header">
+    <div class="header-logo">
+      <img src="assets/images/logo-arclad.png" alt="Arclad" class="logo">
+    </div>
+    
+    <div class="header-content">
+      <div class="header-title-section">
+        <h1 class="header-title">{{ headerInfo.title }}</h1>
+        <h2 class="header-subtitle">{{ headerInfo.subtitle }}</h2>
+      </div>
+      
+      <div class="header-info-table">
+        <div class="info-row">
+          <div class="info-cell">
+            <div class="info-label">FECHA DE CREACIÓN</div>
+            <div class="info-value">{{ headerInfo.fechaCreacion }}</div>
+          </div>
+          <div class="info-cell">
+            <div class="info-label">CÓDIGO</div>
+            <div class="info-value">{{ headerInfo.codigo }}</div>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-cell">
+            <div class="info-label">PREDECESORA</div>
+            <div class="info-value">{{ headerInfo.predecesora || '-' }}</div>
+          </div>
+          <div class="info-cell">
+            <div class="info-label">TIPO</div>
+            <div class="info-value">{{ headerInfo.tipo }}</div>
+          </div>
+          <div class="info-cell">
+            <div class="info-label">FUENTE</div>
+            <div class="info-value">{{ headerInfo.fuente }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Control Section -->
+  <div class="control-section">
+    <h3 class="section-title">CONTROL CRITERIOS DE OPERACIÓN</h3>
+    <div class="control-grid">
+      <div class="control-row">
+        <div class="control-item">
+          <span class="control-label">LÍDER</span>
+          <span class="control-value">{{ controlInfo.lider }}</span>
+        </div>
+        <div class="control-item">
+          <span class="control-label">CARGO</span>
+          <span class="control-value">{{ controlInfo.cargo }}</span>
+        </div>
+      </div>
+      <div class="control-row full-width">
+        <div class="control-item">
+          <span class="control-label">{{ controlInfo.equipo }}</span>
+          <span class="control-value">{{ controlInfo.direccion }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Report Sections -->
+  <div class="report-sections">
+    <!-- Problema -->
+    <div class="report-section">
+      <div class="section-header">
+        <mat-icon [style.color]="sections[0].iconColor">{{ sections[0].icon }}</mat-icon>
+        <h3>{{ sections[0].title }}</h3>
+      </div>
+      <div class="section-content">
+        <p>{{ sections[0].content }}</p>
+      </div>
+    </div>
+
+    <!-- Requisito Incumplido -->
+    <div class="report-section">
+      <div class="section-header">
+        <mat-icon [style.color]="sections[1].iconColor">{{ sections[1].icon }}</mat-icon>
+        <h3>{{ sections[1].title }}</h3>
+      </div>
+      <div class="section-content">
+        <div class="requisito-card" *ngFor="let item of sections[1].items">
+          <div class="requisito-badge">
+            <span class="norma-label">{{ item.norma }}</span>
+          </div>
+          <h4>{{ item.numero }}</h4>
+          <p>{{ item.descripcion }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Corrección Aplicada -->
+    <div class="report-section">
+      <div class="section-header">
+        <mat-icon [style.color]="sections[2].iconColor">{{ sections[2].icon }}</mat-icon>
+        <h3>{{ sections[2].title }}</h3>
+      </div>
+      <div class="section-content">
+        <table class="simple-table">
+          <thead>
+            <tr>
+              <th>ACTIVIDAD</th>
+              <th>RESPONSABLE</th>
+              <th>ESTADO</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let activity of sections[2].activities">
+              <td>{{ activity.actividad }}</td>
+              <td>{{ activity.responsable }}</td>
+              <td>
+                <span class="status-badge completado">{{ activity.estado }}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Análisis de Causa -->
+    <div class="report-section">
+      <div class="section-header">
+        <mat-icon [style.color]="sections[3].iconColor">{{ sections[3].icon }}</mat-icon>
+        <h3>{{ sections[3].title }}</h3>
+      </div>
+      <div class="section-content">
+        <div class="causas-section">
+          <h4 class="subsection-title">Causas Identificadas (Ishikawa)</h4>
+          <ul class="causas-list">
+            <li *ngFor="let causa of sections[3].causasIdentificadas">
+              <strong>{{ causa.categoria }}:</strong> {{ causa.causa }}
+            </li>
+          </ul>
+        </div>
+        
+        <div class="causa-fundamental-box">
+          <div class="box-header">
+            <mat-icon>star</mat-icon>
+            <h4>Causa Fundamental</h4>
+          </div>
+          <p>{{ sections[3].causaFundamental }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

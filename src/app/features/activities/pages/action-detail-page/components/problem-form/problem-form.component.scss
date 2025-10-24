@@ -1,0 +1,45 @@
+.form-section {
+  .section-description {
+    margin: 0 0 1.5rem 0;
+    color: #6b7280;
+    line-height: 1.6;
+    font-size: 0.95rem;
+  }
+
+  .field-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: #374151;
+  }
+
+    .problem-textarea {
+    width: 100%;
+    min-height: 150px;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-family: inherit;
+    color: #374151;
+    line-height: 1.6;
+    resize: vertical;
+    background-color: white;
+    transition: all 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: var(--arclad-primary-500);
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+    }
+
+    &:hover {
+      border-color: #d1d5db;
+    }
+
+    &::placeholder {
+      color: #9ca3af;
+    }
+  }
+}

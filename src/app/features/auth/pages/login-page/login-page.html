@@ -1,0 +1,71 @@
+<div class="grid grid-nogutter h-screen">
+  <!-- Selector de idioma en la parte superior derecha absoluta -->
+  <div class="language-selector-absolute">
+    <app-language-selector></app-language-selector>
+  </div>
+
+  <!-- Lado izquierdo - Logo y fondo (oculto en mobile con hidden md:flex) -->
+  <div class="col-12 md:col-6 hidden md:flex align-items-center justify-content-center login-left"
+    style="background: #fff;">
+
+    <img src="assets/images/bg-login-form.png" alt="ARCLAD Logo" class="logo-image" />
+
+  </div>
+
+  <!-- Lado derecho - Formulario -->
+  <div class="col-12 md:col-6 flex align-items-center justify-content-center login-right p-4">
+    <div class="form-container w-full">
+
+      <!-- Título -->
+      <div class="header-text text-center mb-4">
+        <h2>{{ 'AUTH.WELCOME_TITLE' | translate }}</h2>
+        <p>{{ 'AUTH.WELCOME_SUBTITLE' | translate }}</p>
+      </div>
+
+      <!-- Formulario -->
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+
+        <!-- Campo de usuario/email -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>{{ 'AUTH.USERNAME' | translate }}</mat-label>
+          <input matInput type="email" formControlName="email" [placeholder]="'AUTH.USERNAME' | translate"
+            autocomplete="email">
+          @if (isFieldInvalid('email')) {
+          <mat-error>{{ getErrorMessage('email') }}</mat-error>
+          }
+        </mat-form-field>
+
+        <!-- Campo de contraseña -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>{{ 'AUTH.PASSWORD' | translate }}</mat-label>
+          <input matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="password"
+            [placeholder]="'AUTH.PASSWORD' | translate" autocomplete="current-password">
+          <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()"
+            [attr.aria-label]="'AUTH.PASSWORD' | translate" [attr.aria-pressed]="hidePassword()">
+            <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          @if (isFieldInvalid('password')) {
+          <mat-error>{{ getErrorMessage('password') }}</mat-error>
+          }
+        </mat-form-field>
+
+        <!-- reCAPTCHA Placeholder -->
+        <div class="flex justify-content-center my-3">
+          <div class="recaptcha-placeholder">
+            <span>reCAPTCHA placeholder</span>
+          </div>
+        </div>
+
+        <!-- Botón de submit -->
+        <button mat-raised-button color="primary" type="submit" class="submit-button w-full" [disabled]="isLoading()">
+          @if (isLoading()) {
+          <mat-spinner diameter="24" class="spinner"></mat-spinner>
+          } @else {
+          <span>{{ 'AUTH.LOGIN_BUTTON' | translate }}</span>
+          }
+        </button>
+
+      </form>
+    </div>
+  </div>
+</div>

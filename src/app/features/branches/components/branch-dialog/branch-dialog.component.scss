@@ -1,0 +1,250 @@
+// Variables de color del tema usando CSS custom properties
+$primary-green: var(--arclad-primary-500);
+$light-green: var(--arclad-primary-50);
+$text-dark: #1f2937;
+$text-medium: #374151; // neutral-700 del diseño
+$text-gray: #6b7280;
+$border-color: #e5e7eb;
+$light-gray: #f3f4f6;
+
+:host {
+  ::ng-deep {
+    .mat-mdc-dialog-container {
+      padding: 0 !important;
+      overflow: visible !important;
+      border-radius: 12px !important;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15) !important;
+    }
+    
+    .mdc-dialog .mdc-dialog__surface {
+      border-radius: 12px !important;
+    }
+  }
+}
+
+.branch-dialog {
+  display: flex;
+  flex-direction: column;
+  min-width: 500px;
+  max-width: 550px;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: white;
+
+  .dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 2rem 0.25rem 2rem;
+    background-color: white;
+    border-radius: 12px 12px 0 0;
+
+    .dialog-title {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: $text-dark;
+      letter-spacing: -0.02em;
+    }
+
+    .close-button {
+      color: $text-gray;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: -0.5rem;
+      flex-shrink: 0;
+
+      &:hover {
+        background-color: $light-gray;
+        color: $text-dark;
+      }
+
+      mat-icon {
+        font-size: 1.25rem;
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+    }
+  }
+
+  .dialog-subtitle {
+    padding: 0 2rem 0.75rem 2rem;
+    font-size: 0.875rem;
+    color: $text-gray;
+    font-weight: 400;
+    line-height: 1.4;
+    background-color: white;
+  }
+
+  .form-content {
+    padding: 1.25rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background-color: white;
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.375rem;
+
+      &.toggle-group {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.5rem 0;
+      }
+
+      .field-label {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: $text-medium;
+        letter-spacing: 0.01em;
+        margin-bottom: 0.25rem;
+      }
+
+      .input-field {
+        padding: 0.75rem 1rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        color: $text-dark;
+        background-color: #f8fafc;
+        font-family: inherit;
+        transition: all 0.2s ease;
+        width: 100%;
+        box-sizing: border-box;
+
+        &::placeholder {
+          color: #9ca3af;
+          font-weight: 400;
+        }
+
+        &:focus {
+          outline: none;
+          border-color: $primary-green;
+          background-color: white;
+          box-shadow: 0 0 0 2px rgba(23, 207, 84, 0.08);
+        }
+
+        &:hover:not(:focus) {
+          border-color: #cbd5e1;
+          background-color: white;
+        }
+
+        &.error {
+          border-color: #ef4444 !important;
+          background-color: #f8fafc !important;
+
+          &:focus {
+            background-color: white !important;
+            box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.1) !important;
+          }
+
+          &:hover:not(:focus) {
+            background-color: white !important;
+          }
+        }
+      }
+
+      .error-message {
+        margin-top: 0.25rem;
+        font-size: 0.8125rem;
+        color: #ef4444;
+        font-weight: 400;
+        line-height: 1.4;
+
+        span {
+          display: block;
+        }
+      }
+    }
+  }
+
+  .dialog-footer {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #D5EDD7;
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+
+    .cancel-button {
+      background-color: #f8f9fa !important; // Gris claro recomendado
+      color: #6b7280 !important; // Texto gris medio
+      font-weight: 500 !important;
+      font-size: 0.875rem !important;
+      padding: 0.625rem 1.5rem !important;
+      height: 36px;
+      border-radius: 6px !important;
+      text-transform: none !important;
+      letter-spacing: 0.01em;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+      &:hover:not(:disabled) {
+        background-color: #e9ecef !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      }
+    }
+
+    .save-button {
+      background-color: $primary-green !important;
+      color: white !important;
+      font-weight: 500 !important;
+      font-size: 0.875rem !important;
+      padding: 0.625rem 1.5rem !important;
+      height: 36px;
+      border-radius: 6px !important;
+      text-transform: none !important;
+      letter-spacing: 0.01em;
+      box-shadow: 0 2px 6px rgba(23, 207, 84, 0.15);
+
+      &:hover:not(:disabled) {
+        background-color: var(--arclad-primary-600) !important;
+        box-shadow: 0 4px 12px rgba(23, 207, 84, 0.25);
+      }
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .branch-dialog {
+    min-width: 90vw;
+    max-width: 90vw;
+
+    .form-content {
+      padding: 1.5rem;
+      gap: 1.5rem;
+    }
+
+    .dialog-footer {
+      padding: 1.25rem 1.5rem;
+      flex-direction: column;
+      gap: 0.75rem;
+
+      .cancel-button,
+      .save-button {
+        width: 100%;
+      }
+    }
+  }
+}
+
+// Customización adicional para el dialog
+::ng-deep {
+  .mat-mdc-dialog-container {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+  }
+  
+  .mdc-dialog__surface {
+    border-radius: 12px !important;
+  }
+}

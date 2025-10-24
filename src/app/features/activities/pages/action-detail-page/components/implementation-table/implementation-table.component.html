@@ -1,0 +1,180 @@
+<div class="implementation-table-container">
+  <!-- Filter Section -->
+  <div class="table-filter-section">
+    <div class="search-container">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input
+        class="search-input"
+        type="text"
+        [value]="searchQuery()"
+        (input)="onSearch($any($event.target).value)"
+        placeholder="Buscar por actividad, evidencia o responsable...">
+    </div>
+
+    <div class="buttons-group">
+      <button mat-raised-button color="primary" class="filter-button">
+        <mat-icon>tune</mat-icon>
+        Filtrar
+      </button>
+
+      <button mat-button class="clear-button" (click)="onClearFilters()">
+        <mat-icon>cleaning_services</mat-icon>
+        Limpiar
+      </button>
+    </div>
+  </div>
+
+  <!-- Desktop Table -->
+  <div class="desktop-table-container desktop-only">
+    <table mat-table [dataSource]="paginatedActivities()" class="implementation-table">
+      <!-- N° Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>N°</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+
+      <!-- Actividad Column -->
+      <ng-container matColumnDef="activity">
+        <th mat-header-cell *matHeaderCellDef>Actividad (Qué y Cómo)</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="activity-cell">
+            {{ element.activity }}
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Evidencia Column -->
+      <ng-container matColumnDef="evidence">
+        <th mat-header-cell *matHeaderCellDef>Evidencia</th>
+        <td mat-cell *matCellDef="let element">{{ element.evidence }}</td>
+      </ng-container>
+
+      <!-- Responsable Column -->
+      <ng-container matColumnDef="responsible">
+        <th mat-header-cell *matHeaderCellDef>Responsable</th>
+        <td mat-cell *matCellDef="let element">{{ element.responsible }}</td>
+      </ng-container>
+
+      <!-- Fecha propuesta Column -->
+      <ng-container matColumnDef="proposedDate">
+        <th mat-header-cell *matHeaderCellDef>Fecha propuesta</th>
+        <td mat-cell *matCellDef="let element">{{ element.proposedDate }}</td>
+      </ng-container>
+
+      <!-- Fecha cumplimiento Column -->
+      <ng-container matColumnDef="completionDate">
+        <th mat-header-cell *matHeaderCellDef>Fecha cumplimiento</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.completionDate || '-' }}
+        </td>
+      </ng-container>
+
+      <!-- Estado Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Estado</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-chip-set>
+            <mat-chip
+              [class]="getStatusClass(element.status)"
+              class="status-chip">
+              {{ getStatusLabel(element.status) }}
+            </mat-chip>
+          </mat-chip-set>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <!-- Mobile Cards -->
+  <div class="mobile-cards-container mobile-only">
+    @for (activity of paginatedActivities(); track activity.id) {
+      <div class="implementation-card">
+        <div class="card-header">
+          <mat-chip
+            [class]="getStatusClass(activity.status)"
+            class="status-chip mobile-chip">
+            {{ getStatusLabel(activity.status) }}
+          </mat-chip>
+        </div>
+
+        <div class="card-content">
+          <!-- Actividad -->
+          <div class="card-section">
+            <div class="section-label">
+              <mat-icon class="section-icon">assignment</mat-icon>
+              <span>Actividad (Qué y Cómo)</span>
+            </div>
+            <p class="section-value activity-text">{{ activity.activity }}</p>
+          </div>
+
+          <!-- Evidencia -->
+          <div class="card-section">
+            <div class="section-label">
+              <mat-icon class="section-icon">description</mat-icon>
+              <span>Evidencia</span>
+            </div>
+            <p class="section-value">{{ activity.evidence }}</p>
+          </div>
+
+          <!-- Responsable -->
+          <div class="card-section">
+            <div class="section-label">
+              <mat-icon class="section-icon">person</mat-icon>
+              <span>Responsable</span>
+            </div>
+            <p class="section-value">{{ activity.responsible }}</p>
+          </div>
+
+          <!-- Fechas -->
+          <div class="card-section dates-section">
+            <div class="date-group">
+              <div class="section-label">
+                <mat-icon class="section-icon">schedule</mat-icon>
+                <span>Fecha Propuesta</span>
+              </div>
+              <p class="section-value date-value">{{ activity.proposedDate }}</p>
+            </div>
+
+            <div class="date-group">
+              <div class="section-label">
+                <mat-icon class="section-icon">event_available</mat-icon>
+                <span>Fecha Cumplimiento</span>
+              </div>
+              <p class="section-value date-value">{{ activity.completionDate || '-' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Empty State para móvil -->
+    <div class="empty-state" *ngIf="paginatedActivities().length === 0">
+      <mat-icon>assignment</mat-icon>
+      <p>No se encontraron actividades</p>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  @if (filteredActivities().length === 0) {
+    <div class="empty-state">
+      <mat-icon>assignment</mat-icon>
+      <p>No se encontraron actividades</p>
+    </div>
+  }
+
+  <!-- Pagination -->
+  <div class="pagination-container">
+    <mat-paginator
+      #paginator
+      [length]="filteredActivities().length"
+      [pageSize]="10"
+      [pageSizeOptions]="[10, 25, 50]"
+      (page)="onPageChange($event)"
+      showFirstLastButtons
+      class="mat-paginator-custom">
+    </mat-paginator>
+  </div>
+</div>

@@ -1,0 +1,100 @@
+<div class="form-section">
+  <p class="section-description">
+    Detallar las acciones inmediatas que se tomaron o se tomarán para contener el problema y mitigar su impacto a corto plazo.
+  </p>
+
+  <!-- Desktop Table View -->
+  <div class="correction-table desktop-only">
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <th>ACTIVIDAD (QUÉ Y CÓMO)</th>
+          <th>RESPONSABLE</th>
+          <th>FECHA DE EJECUCIÓN</th>
+          <th>EVIDENCIA</th>
+          <th>SEGUIMIENTO</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let activity of activities">
+          <td>{{ activity.activity }}</td>
+          <td>{{ activity.responsible }}</td>
+          <td>{{ activity.executionDate }}</td>
+          <td>
+            <a *ngIf="activity.evidence" href="#" class="evidence-link">
+              <mat-icon>attach_file</mat-icon>
+              {{ activity.evidence }}
+            </a>
+            <span *ngIf="!activity.evidence">-</span>
+          </td>
+          <td>
+            <span class="status-badge" [ngClass]="getStatusClass(activity.status)">
+              {{ getStatusLabel(activity.status) }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Mobile Cards View -->
+  <div class="mobile-cards-container mobile-only">
+    <div class="correction-card" *ngFor="let activity of activities; let i = index">
+      <div class="card-header">
+        <div class="status-container">
+          <span class="status-label">Seguimiento</span>
+          <span class="status-badge mobile-badge" [ngClass]="getStatusClass(activity.status)">
+            {{ getStatusLabel(activity.status) }}
+          </span>
+        </div>
+      </div>
+
+      <div class="card-content">
+        <!-- Actividad -->
+        <div class="card-section">
+          <div class="section-label">
+            <mat-icon class="section-icon">assignment</mat-icon>
+            <span>Actividad</span>
+          </div>
+          <p class="section-value">{{ activity.activity }}</p>
+        </div>
+
+        <!-- Responsable -->
+        <div class="card-section">
+          <div class="section-label">
+            <mat-icon class="section-icon">person</mat-icon>
+            <span>Responsable</span>
+          </div>
+          <p class="section-value">{{ activity.responsible }}</p>
+        </div>
+
+        <!-- Fecha -->
+        <div class="card-section">
+          <div class="section-label">
+            <mat-icon class="section-icon">calendar_today</mat-icon>
+            <span>Fecha de Ejecución</span>
+          </div>
+          <p class="section-value">{{ activity.executionDate }}</p>
+        </div>
+
+        <!-- Evidencia -->
+        <div class="card-section" *ngIf="activity.evidence">
+          <div class="section-label">
+            <mat-icon class="section-icon">attach_file</mat-icon>
+            <span>Evidencia</span>
+          </div>
+          <a href="#" class="evidence-link mobile-evidence">
+            <mat-icon>description</mat-icon>
+            {{ activity.evidence }}
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State para móvil -->
+    <div class="empty-state" *ngIf="activities.length === 0">
+      <mat-icon>assignment</mat-icon>
+      <p>No hay actividades de corrección registradas</p>
+    </div>
+  </div>
+</div>

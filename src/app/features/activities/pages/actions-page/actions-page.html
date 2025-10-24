@@ -1,0 +1,262 @@
+<div class="actions-container">
+  <!-- Header -->
+  <div class="actions-header">
+    <div class="header-title">
+      <h1>{{ 'ACTIONS.TITLE' | translate }}</h1>
+    </div>
+    <button mat-raised-button color="primary" class="add-button" (click)="onAddAction()">
+      <mat-icon>add</mat-icon>
+      {{ 'ACTIONS.ADD_BUTTON' | translate }}
+    </button>
+  </div>
+
+  <!-- Table -->
+  <div class="table-container">
+    <!-- Filter Section Inside Table -->
+    <div class="table-filter-section">
+      <div class="search-container">
+        <mat-icon class="search-icon">search</mat-icon>
+        <input 
+          class="search-input"
+          type="text"
+          [value]="searchQuery()"
+          (input)="onSearch($event.target.value)"
+          [placeholder]="'ACTIONS.SEARCH_PLACEHOLDER' | translate">
+      </div>
+
+      <div class="buttons-group">
+        <button mat-raised-button color="primary" class="filter-button">
+          <mat-icon>tune</mat-icon>
+          {{ 'ACTIONS.FILTER' | translate }}
+        </button>
+
+        <button mat-raised-button class="clear-button" (click)="onClearFilters()">
+          <mat-icon>cleaning_services</mat-icon>
+          {{ 'ACTIONS.CLEAR_FILTERS' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Desktop Table View -->
+    @if (!isMobile()) {
+      <table mat-table [dataSource]="paginatedActions()" class="actions-table">
+        <!-- Código Column -->
+        <ng-container matColumnDef="codigo">
+          <th mat-header-cell *matHeaderCellDef>{{ 'ACTIONS.COLUMNS.CODIGO' | translate }}</th>
+          <td mat-cell *matCellDef="let element">
+            <button 
+              class="codigo-button"
+              (click)="onViewActionDetail(element)"
+              [matTooltip]="'ACTION_DETAIL.VIEW_DETAIL' | translate">
+              {{ element.codigo }}
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- Nombre Acción Column -->
+        <ng-container matColumnDef="nombreAccion">
+          <th mat-header-cell *matHeaderCellDef>{{ 'ACTIONS.COLUMNS.NOMBRE_ACCION' | translate }}</th>
+          <td mat-cell *matCellDef="let element">
+            <div class="nombre-accion-cell">
+              {{ element.nombreAccion }}
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Responsable Column -->
+        <ng-container matColumnDef="responsable">
+          <th mat-header-cell *matHeaderCellDef>{{ 'ACTIONS.COLUMNS.RESPONSABLE' | translate }}</th>
+          <td mat-cell *matCellDef="let element">
+            <div class="responsable-cell">
+              <mat-icon class="person-icon">person</mat-icon>
+              {{ element.responsable }}
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Fecha Apertura Column -->
+        <ng-container matColumnDef="fechaApertura">
+          <th mat-header-cell *matHeaderCellDef>{{ 'ACTIONS.COLUMNS.FECHA_APERTURA' | translate }}</th>
+          <td mat-cell *matCellDef="let element">
+            <div class="fecha-cell">
+              <mat-icon class="calendar-icon">calendar_today</mat-icon>
+              {{ element.fechaApertura }}
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Fuente Column -->
+        <ng-container matColumnDef="fuente">
+          <th mat-header-cell *matHeaderCellDef>{{ 'ACTIONS.COLUMNS.FUENTE' | translate }}</th>
+          <td mat-cell *matCellDef="let element">
+            <div class="fuente-cell">
+              {{ element.fuente }}
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Fecha Cumplimiento Column -->
+        <ng-container matColumnDef="fechaCumplimiento">
+          <th mat-header-cell *matHeaderCellDef>{{ 'ACTIONS.COLUMNS.FECHA_CUMPLIMIENTO' | translate }}</th>
+          <td mat-cell *matCellDef="let element">
+            <div class="fecha-cell">
+              @if (element.fechaCumplimiento) {
+                <mat-icon class="calendar-icon">event</mat-icon>
+                {{ element.fechaCumplimiento }}
+              } @else {
+                <span class="no-date">-</span>
+              }
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Estado Column -->
+        <ng-container matColumnDef="estado">
+          <th mat-header-cell *matHeaderCellDef>{{ 'ACTIONS.COLUMNS.ESTADO' | translate }}</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-chip-set>
+              <mat-chip 
+                [class]="getStatusClass(element.estado)"
+                class="status-chip">
+                {{ getStatusLabel(element.estado) }}
+              </mat-chip>
+            </mat-chip-set>
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="text-center">{{ 'ACTIONS.TABLE.ACTIONS' | translate }}</th>
+          <td mat-cell *matCellDef="let action" class="text-center">
+            <div class="action-buttons">
+              <button 
+                mat-icon-button 
+                (click)="onEditAction(action)"
+                matTooltip="Editar"
+                class="action-button">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button 
+                mat-icon-button 
+                color="warn" 
+                (click)="onDeleteAction(action)"
+                matTooltip="Eliminar"
+                class="action-button">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    }
+
+    <!-- Mobile Cards View -->
+    @if (isMobile()) {
+      <div class="mobile-cards-container">
+        @for (action of paginatedActions(); track action.id) {
+          <mat-card class="action-card" (click)="onViewActionDetail(action)">
+            <mat-card-content>
+              <!-- Header with Code and Status -->
+              <div class="card-header">
+                <div class="code-section">
+                  <span class="code-label">{{ 'ACTIONS.COLUMNS.CODIGO' | translate }}:</span>
+                  <span class="code-value">{{ action.codigo }}</span>
+                </div>
+                <mat-chip 
+                  [class]="getStatusClass(action.estado)"
+                  class="status-chip mobile-chip">
+                  {{ getStatusLabel(action.estado) }}
+                </mat-chip>
+              </div>
+
+              <!-- Title -->
+              <div class="card-title">
+                <h3>{{ action.nombreAccion }}</h3>
+              </div>
+
+              <!-- Details Grid -->
+              <div class="card-details">
+                <div class="detail-row">
+                  <mat-icon class="detail-icon">person</mat-icon>
+                  <div class="detail-content">
+                    <span class="detail-label">{{ 'ACTIONS.COLUMNS.RESPONSABLE' | translate }}</span>
+                    <span class="detail-value">{{ action.responsable }}</span>
+                  </div>
+                </div>
+
+                <div class="detail-row">
+                  <mat-icon class="detail-icon">calendar_today</mat-icon>
+                  <div class="detail-content">
+                    <span class="detail-label">{{ 'ACTIONS.COLUMNS.FECHA_APERTURA' | translate }}</span>
+                    <span class="detail-value">{{ action.fechaApertura }}</span>
+                  </div>
+                </div>
+
+                <div class="detail-row">
+                  <mat-icon class="detail-icon">source</mat-icon>
+                  <div class="detail-content">
+                    <span class="detail-label">{{ 'ACTIONS.COLUMNS.FUENTE' | translate }}</span>
+                    <span class="detail-value">{{ action.fuente }}</span>
+                  </div>
+                </div>
+
+                @if (action.fechaCumplimiento) {
+                  <div class="detail-row">
+                    <mat-icon class="detail-icon">event</mat-icon>
+                    <div class="detail-content">
+                      <span class="detail-label">{{ 'ACTIONS.COLUMNS.FECHA_CUMPLIMIENTO' | translate }}</span>
+                      <span class="detail-value">{{ action.fechaCumplimiento }}</span>
+                    </div>
+                  </div>
+                }
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="card-actions">
+                <button 
+                  mat-icon-button 
+                  (click)="onEditAction(action); $event.stopPropagation()"
+                  matTooltip="Editar"
+                  class="action-button">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button 
+                  mat-icon-button 
+                  color="warn" 
+                  (click)="onDeleteAction(action); $event.stopPropagation()"
+                  matTooltip="Eliminar"
+                  class="action-button">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        }
+      </div>
+    }
+
+    <!-- Empty State -->
+    @if (filteredActions().length === 0) {
+      <div class="empty-state">
+        <mat-icon>assignment</mat-icon>
+        <p>{{ 'ACTIONS.NO_RESULTS' | translate }}</p>
+      </div>
+    }
+
+    <!-- Pagination -->
+    <div class="pagination-container">
+      <mat-paginator 
+        #paginator
+        [length]="filteredActions().length" 
+        [pageSize]="5" 
+        [pageSizeOptions]="[5, 10, 25]"
+        (page)="onPageChange($event)"
+        showFirstLastButtons
+        class="mat-paginator-custom">
+      </mat-paginator>
+    </div>
+  </div>
+</div>

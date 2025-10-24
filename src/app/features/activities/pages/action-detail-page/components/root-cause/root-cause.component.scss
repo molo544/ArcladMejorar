@@ -1,0 +1,154 @@
+.root-cause-container {
+  .section-description {
+    margin-bottom: 1.5rem;
+
+    .field-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 0.5rem;
+    }
+
+    .description-text {
+      font-size: 0.875rem;
+      color: #6b7280;
+      line-height: 1.6;
+      margin: 0;
+    }
+  }
+
+  .selection-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+
+    .field-group {
+      .custom-select {
+        width: 100%;
+        background-color: white;
+        border-radius: 8px;
+
+        ::ng-deep {
+          .mat-mdc-text-field-wrapper {
+            background-color: white;
+            border-radius: 8px;
+
+            .mat-mdc-form-field-flex {
+              background-color: white;
+
+              .mat-mdc-form-field-infix {
+                padding-top: 1rem;
+                padding-bottom: 1rem;
+              }
+            }
+          }
+
+          .mat-mdc-form-field-focus-overlay {
+            background-color: transparent;
+          }
+
+          .mdc-notched-outline {
+            .mdc-notched-outline__leading,
+            .mdc-notched-outline__notch,
+            .mdc-notched-outline__trailing {
+              border-color: #d1d5db;
+            }
+          }
+
+          &:hover {
+            .mdc-notched-outline {
+              .mdc-notched-outline__leading,
+              .mdc-notched-outline__notch,
+              .mdc-notched-outline__trailing {
+                border-color: #9ca3af;
+              }
+            }
+          }
+
+          &.mat-focused {
+            .mdc-notched-outline {
+              .mdc-notched-outline__leading,
+              .mdc-notched-outline__notch,
+              .mdc-notched-outline__trailing {
+                border-color: var(--arclad-primary-500);
+                border-width: 2px;
+              }
+            }
+          }
+
+          .mat-mdc-select-value {
+            color: #374151;
+            font-size: 0.875rem;
+          }
+
+          .mat-mdc-select-placeholder {
+            color: #9ca3af;
+            font-size: 0.875rem;
+          }
+
+          .mat-mdc-select-arrow {
+            color: #6b7280;
+          }
+
+          // Estilos para el label
+          .mat-mdc-form-field-label {
+            color: #6b7280;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Estilos globales para los paneles de opciones de AMBOS dropdowns
+::ng-deep {
+  .mat-mdc-select-panel {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+    .mat-mdc-option {
+      min-height: 48px;
+      padding: 0 16px;
+      font-size: 0.875rem;
+      
+      &:hover:not(.mdc-list-item--disabled) {
+        background-color: #f9fafb;
+      }
+
+      &.mat-mdc-option-active {
+        background-color: #f0fdf4;
+      }
+
+      &.mdc-list-item--selected:not(.mdc-list-item--disabled) {
+        background-color: #f0fdf4;
+        
+        .mdc-list-item__primary-text {
+          color: #166534;
+          font-weight: 500;
+        }
+      }
+
+      .mdc-list-item__primary-text {
+        color: #374151;
+        font-size: 0.875rem;
+        line-height: 1.5;
+      }
+    }
+
+    // Eliminar cualquier línea divisoria entre opciones
+    .mat-mdc-option + .mat-mdc-option {
+      border-top: none;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .root-cause-container {
+    .selection-fields {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+}

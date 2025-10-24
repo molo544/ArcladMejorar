@@ -1,1 +1,222 @@
-/* You can add global styles to this file, and also import other style files */
+/* Importar @use primero (regla de SCSS) */
+/* Importar el tema personalizado de Arclad */
+@use './styles/theme.scss';
+
+/* Importar CSS con @import después de @use */
+@import 'primeflex/primeflex.css';
+
+/* Variables globales personalizadas de Arclad */
+:root {
+  --arclad-primary: #17cf54;
+  --arclad-accent: #4b855f;
+  --arclad-warn: #f44336;
+  --arclad-success: #17cf54;
+  --arclad-background-light: #f6f8f6;
+  --arclad-background-dark: #112116;
+  --arclad-text-light: #112116;
+  --arclad-text-dark: #f6f8f6;
+  --arclad-sidebar-width: 250px;
+}
+
+/* Reset y estilos base */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Manrope', 'Roboto', "Helvetica Neue", sans-serif;
+  background-color: var(--arclad-background-light);
+  color: var(--arclad-text-light);
+}
+
+/* Clases utilitarias personalizadas */
+.full-width {
+  width: 100%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Estilos para el contenedor principal de la app */
+.app-container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+/* Estilos para mat-menu (dropdowns) */
+::ng-deep {
+  .language-selector-menu {
+    .mat-mdc-menu-content {
+      padding: 0 !important;
+    }
+
+    .mat-mdc-menu-item {
+      height: 40px;
+      line-height: 40px;
+      padding: 0 1rem !important;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      min-width: 140px;
+
+      &:hover {
+        background-color: #f0f9ff !important;
+      }
+
+      &.mat-mdc-menu-item-highlighted {
+        background-color: #e0f2fe !important;
+        color: #17cf54;
+        font-weight: 500;
+      }
+
+      .flag {
+        margin-right: 0.75rem;
+        font-size: 1.1em;
+        width: 1.2em;
+      }
+    }
+  }
+}
+
+/* Estilos transversales para filtros de tablas */
+.table-filter-section {
+  .search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    max-width: 400px;
+    background-color: #f8fafc;
+    border-radius: 6px;
+    padding: 0; /* Eliminado el padding: 0 1rem */
+    height: 44px;
+    border: 1px solid #e2e8f0;
+
+    .search-icon {
+      color: #9ca3af;
+      font-size: 1.125rem;
+      width: 1.125rem;
+      height: 1.125rem;
+      margin-right: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .search-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 0.875rem;
+      color: #374151;
+      font-family: 'Manrope', sans-serif;
+
+      &::placeholder {
+        color: #9ca3af;
+        font-size: 0.875rem;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    &:focus-within {
+      border-color: var(--arclad-primary-300);
+      box-shadow: 0 0 0 1px var(--arclad-primary-200);
+    }
+  }
+
+  .filter-button {
+    border-radius: 6px !important;
+    padding: 0.625rem 1.25rem !important;
+    font-weight: 600 !important;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-transform: none !important;
+    font-size: 0.875rem !important;
+    font-family: 'Manrope', sans-serif !important;
+    min-width: auto !important;
+
+    mat-icon {
+      font-size: 1rem;
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+
+  .clear-button {
+    border-radius: 6px !important;
+    padding: 0.625rem 1.25rem !important;
+    font-weight: 600 !important;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-transform: none !important;
+    font-size: 0.875rem !important;
+    font-family: 'Manrope', sans-serif !important;
+    background-color: #f8f9fa !important;
+    color: #6c757d !important;
+    min-width: auto !important;
+
+    &:hover {
+      background-color: #e9ecef !important;
+      color: #495057 !important;
+    }
+
+    mat-icon {
+      margin-right: 0.25rem;
+      font-size: 1rem;
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+}
+
+/* Responsive: Mobile styles para filtros */
+@media (max-width: 768px) {
+  .table-filter-section {
+    .search-container {
+      max-width: 100%;
+      flex: 1;
+    }
+  }
+
+  /* Quitar el fondo del contenedor de tabla en mobile */
+  .table-container {
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  /* Separación entre filtros y tarjetas en mobile */
+  .table-container .table-filter-section {
+    margin-bottom: 1.5rem;
+    background-color: white;
+    border-radius: 8px;
+  }
+
+  /* Padding entre filtros y primera tarjeta en mobile */
+  .mobile-cards-container {
+    padding-top: 1.5rem;
+  }
+}

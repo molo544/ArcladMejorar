@@ -1,0 +1,155 @@
+<div class="branches-container">
+  <!-- Header -->
+  <div class="branches-header">
+    <div class="header-title">
+      <h1>{{ 'BRANCHES.TITLE' | translate }}</h1>
+    </div>
+    <button mat-raised-button color="primary" class="add-button" (click)="onAddBranch()">
+      <mat-icon>add</mat-icon>
+      {{ 'BRANCHES.ADD_BUTTON' | translate }}
+    </button>
+  </div>
+
+  <!-- Table -->
+  <div class="table-container">
+    <!-- Filter Section Inside Table -->
+    <div class="table-filter-section">
+      <div class="search-container">
+        <mat-icon class="search-icon">search</mat-icon>
+        <input
+          class="search-input"
+          type="text"
+          [value]="searchQuery()"
+          (input)="onSearch($event.target.value)"
+          [placeholder]="'BRANCHES.SEARCH_PLACEHOLDER' | translate">
+      </div>
+
+      <div class="buttons-group">
+        <button mat-raised-button color="primary" class="filter-button">
+          <mat-icon>tune</mat-icon>
+          {{ 'BRANCHES.FILTER' | translate }}
+        </button>
+
+        <button mat-raised-button class="clear-button" (click)="onClearFilters()">
+          <mat-icon>cleaning_services</mat-icon>
+          {{ 'BRANCHES.CLEAR_FILTERS' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Desktop Table View -->
+    @if (!isMobile()) {
+      <table mat-table [dataSource]="paginatedBranches()" class="branches-table">
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>{{ 'BRANCHES.COLUMNS.NAME' | translate }}</th>
+          <td mat-cell *matCellDef="let element">
+            <div class="name-cell">
+              <img [src]="getFlagUrl(element.countryCode)" [alt]="element.name" class="flag-img">
+              {{ element.name }}
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>{{ 'BRANCHES.COLUMNS.STATUS' | translate }}</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-chip-set>
+              <mat-chip
+                [class]="getStatusClass(element.status)"
+                class="status-chip">
+                {{ element.status }}
+              </mat-chip>
+            </mat-chip-set>
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>{{ 'BRANCHES.COLUMNS.ACTIONS' | translate }}</th>
+          <td mat-cell *matCellDef="let element">
+            <div class="actions-cell">
+              <button (click)="onEditBranch(element)" class="edit-btn" [matTooltip]="'BRANCHES.EDIT' | translate">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button (click)="onDeleteBranch(element)" class="delete-btn" [matTooltip]="'BRANCHES.DELETE' | translate">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    }
+
+    <!-- Mobile Cards View -->
+    @if (isMobile()) {
+      <div class="mobile-cards-container">
+        @for (branch of paginatedBranches(); track branch.id) {
+          <mat-card class="branch-card">
+            <mat-card-content>
+              <!-- Header with Name, Flag and Status -->
+              <div class="card-header">
+                <div class="name-with-flag">
+                  <img [src]="getFlagUrl(branch.countryCode)" [alt]="branch.name" class="branch-flag-img">
+                  <h3 class="branch-name">{{ branch.name }}</h3>
+                </div>
+                <mat-chip
+                  [class]="getStatusClass(branch.status)"
+                  class="status-chip mobile-chip">
+                  {{ branch.status }}
+                </mat-chip>
+              </div>
+
+
+
+              <!-- Action Buttons -->
+              <div class="card-actions">
+                <button
+                  mat-icon-button
+                  (click)="onEditBranch(branch)"
+                  matTooltip="Editar"
+                  class="action-button">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="warn"
+                  (click)="onDeleteBranch(branch)"
+                  matTooltip="Eliminar"
+                  class="action-button">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        }
+      </div>
+    }
+
+    <!-- Empty State -->
+    @if (filteredBranches().length === 0) {
+      <div class="empty-state">
+        <mat-icon>business_center</mat-icon>
+        <p>{{ 'BRANCHES.NO_RESULTS' | translate }}</p>
+      </div>
+    }
+
+    <!-- Pagination -->
+    <div class="pagination-container">
+      <mat-paginator
+        #paginator
+        [length]="filteredBranches().length"
+        [pageSize]="5"
+        [pageSizeOptions]="[5, 10, 25]"
+        (page)="onPageChange($event)"
+        showFirstLastButtons
+        class="mat-paginator-custom">
+      </mat-paginator>
+    </div>
+  </div>
+
+</div>

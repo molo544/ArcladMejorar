@@ -1,0 +1,149 @@
+<mat-sidenav-container class="sidenav-container">
+  <!-- Sidebar Lateral -->
+  <mat-sidenav
+    #sidenav
+    [mode]="isMobile() ? 'over' : 'side'"
+    [opened]="sidenavOpened()"
+    class="sidenav">
+
+    <!-- Logo / Header del Sidebar -->
+    <div class="sidebar-header">
+      <img src="assets/images/logo_mejorar.png" alt="mejorAR" class="logo">
+    </div>
+
+    <!-- Menu Items -->
+    <nav class="sidebar-nav">
+      @for (item of menuItems; track item.labelKey) {
+        @if (item.subitems && item.subitems.length > 0) {
+          <!-- Menu Item con subitems -->
+          <div class="nav-item-group">
+            <div
+              class="nav-item nav-item-parent"
+              [class.has-active-child]="hasActiveSubmenu(item)"
+              (click)="toggleMenu(item)">
+              <div class="nav-content">
+                <i class="material-icons nav-icon">{{ item.icon }}</i>
+                <span class="nav-label">{{ item.labelKey | translate }}</span>
+              </div>
+              <i class="material-icons nav-expand-icon">
+                {{ isMenuExpanded(item) ? 'expand_less' : 'expand_more' }}
+              </i>
+            </div>
+
+            <!-- Subitems -->
+            @if (isMenuExpanded(item)) {
+              <nav class="nav-subitems">
+                @for (subitem of item.subitems; track subitem.labelKey) {
+                  @if (subitem.route) {
+                    <a
+                      [routerLink]="subitem.route"
+                      routerLinkActive="active-link"
+                      class="nav-item nav-subitem"
+                      (click)="closeSidenavIfMobile()">
+                      <i class="material-icons nav-icon">{{ subitem.icon }}</i>
+                      <span class="nav-label">{{ subitem.labelKey | translate }}</span>
+                    </a>
+                  } @else {
+                    <div class="nav-item nav-subitem nav-disabled">
+                      <i class="material-icons nav-icon">{{ subitem.icon }}</i>
+                      <span class="nav-label">{{ subitem.labelKey | translate }}</span>
+                    </div>
+                  }
+                }
+              </nav>
+            }
+          </div>
+        } @else {
+          <!-- Menu Item normal -->
+          <a
+            [routerLink]="item.route"
+            routerLinkActive="active-link"
+            class="nav-item"
+            (click)="closeSidenavIfMobile()">
+            <i class="material-icons nav-icon">{{ item.icon }}</i>
+            <span class="nav-label">{{ item.labelKey | translate }}</span>
+          </a>
+        }
+      }
+    </nav>
+
+    <!-- Settings (al final del sidebar) -->
+    <div class="sidebar-footer">
+      <a
+        [routerLink]="settingsItem.route"
+        routerLinkActive="active-link"
+        class="nav-item"
+        (click)="closeSidenavIfMobile()">
+        <i class="material-icons nav-icon">{{ settingsItem.icon }}</i>
+        <span class="nav-label">{{ settingsItem.labelKey | translate }}</span>
+      </a>
+    </div>
+  </mat-sidenav>
+
+  <!-- Contenido Principal -->
+  <mat-sidenav-content class="sidenav-content">
+
+    <!-- Toolbar Superior (solo visible en mobile) -->
+    @if (isMobile()) {
+      <mat-toolbar class="mobile-toolbar" color="primary">
+        <!-- Grupo izquierdo: botón menú -->
+        <div class="toolbar-left">
+          <button mat-icon-button (click)="toggleSidenav()">
+            <mat-icon>menu</mat-icon>
+          </button>
+        </div>
+
+        <span class="toolbar-spacer"></span>
+
+        <!-- Grupo derecho: selector idioma + perfil -->
+        <div class="toolbar-right">
+          <app-language-selector></app-language-selector>
+          <button mat-icon-button [matMenuTriggerFor]="userMenu">
+            <mat-icon>account_circle</mat-icon>
+          </button>
+        </div>
+      </mat-toolbar>
+    }
+
+    <!-- Toolbar Superior (desktop) -->
+    @if (!isMobile()) {
+      <div class="desktop-toolbar">
+        <button mat-icon-button (click)="toggleSidenav()" class="toggle-button">
+          <mat-icon>menu</mat-icon>
+        </button>
+
+        <span class="toolbar-spacer"></span>
+
+        <!-- Selector de idioma -->
+        <div class="language-selector-wrapper">
+          <app-language-selector></app-language-selector>
+        </div>
+
+        <!-- Usuario info -->
+        <div class="user-info" [matMenuTriggerFor]="userMenu">
+          <div class="user-avatar">
+            {{ getUserInitials() }}
+          </div>
+          <div class="user-details">
+            <span class="user-name">{{ getUserFullName() }}</span>
+            <span class="user-role">{{ getUserRole() }}</span>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Menú desplegable de usuario -->
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Cerrar Sesión</span>
+      </button>
+    </mat-menu>
+
+    <!-- Contenido de las páginas -->
+    <div class="page-content">
+      <router-outlet></router-outlet>
+    </div>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

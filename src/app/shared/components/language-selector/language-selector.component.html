@@ -1,0 +1,23 @@
+<div class="language-selector" (click)="toggleDropdown($event)">
+  <div class="selected-language">
+    <img [src]="getFlagUrl(selectedCountry)" [alt]="getLanguageName(selectedCountry)" class="flag-icon" [title]="getLanguageName(selectedCountry)">
+    <span class="language-code">{{ getLanguageName(selectedCountry) }}</span>
+    <svg class="arrow" [class.open]="isDropdownOpen" width="12" height="8" viewBox="0 0 12 8" fill="none">
+      <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <div class="dropdown-menu" [class.show]="isDropdownOpen">
+    <div
+      *ngFor="let lang of languages"
+      class="dropdown-item"
+      [class.selected]="selectedCountry === lang.name"
+      (click)="onLanguageChange($event, lang.name)">
+      <img [src]="getFlagUrl(lang.name)" [alt]="lang.name" class="flag-icon" [title]="lang.name">
+      <span class="country-name">{{ lang.name }}</span>
+    </div>
+  </div>
+</div>
+
+<!-- Overlay para cerrar el dropdown al hacer clic fuera -->
+<div class="dropdown-overlay" [class.show]="isDropdownOpen" (click)="closeDropdown()"></div>

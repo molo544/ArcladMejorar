@@ -1,0 +1,74 @@
+<div class="branch-dialog">
+  <div class="dialog-header">
+    <h2 class="dialog-title">
+      @if (isEdit) {
+        {{ 'BRANCHES.DIALOG.EDIT_TITLE' | translate }}
+      } @else {
+        {{ 'BRANCHES.DIALOG.CREATE_TITLE' | translate }}
+      }
+    </h2>
+    <button mat-icon-button class="close-button" (click)="onCancel()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="dialog-subtitle">
+    @if (isEdit) {
+      {{ 'BRANCHES.DIALOG.EDIT_DESCRIPTION' | translate }}
+    } @else {
+      {{ 'BRANCHES.DIALOG.CREATE_DESCRIPTION' | translate }}
+    }
+  </div>
+
+  <form [formGroup]="form" class="form-content">
+    <!-- Nombre Field -->
+    <div class="form-group">
+      <label class="field-label">{{ 'BRANCHES.DIALOG.NAME_LABEL' | translate }}</label>
+      <input
+        type="text"
+        formControlName="name"
+        [placeholder]="'BRANCHES.DIALOG.NAME_PLACEHOLDER' | translate"
+        class="input-field"
+        [class.error]="form.get('name')?.invalid && form.get('name')?.touched">
+      @if (form.get('name')?.invalid && form.get('name')?.touched) {
+        <div class="error-message">
+          @if (form.get('name')?.errors?.['required']) {
+            <span>{{ 'BRANCHES.DIALOG.VALIDATION.NAME_REQUIRED' | translate }}</span>
+          }
+          @if (form.get('name')?.errors?.['minlength']) {
+            <span>{{ 'BRANCHES.DIALOG.VALIDATION.NAME_MIN_LENGTH' | translate }}</span>
+          }
+        </div>
+      }
+    </div>
+
+
+
+    <!-- Active Toggle -->
+    <div class="form-group toggle-group">
+      <label class="field-label">{{ 'BRANCHES.DIALOG.ACTIVE_LABEL' | translate }}</label>
+      <mat-slide-toggle
+        formControlName="active"
+        color="primary">
+      </mat-slide-toggle>
+    </div>
+  </form>
+
+  <div class="dialog-footer">
+    <button
+      mat-raised-button
+      class="cancel-button"
+      (click)="onCancel()">
+      <mat-icon>close</mat-icon>
+      {{ 'BRANCHES.DIALOG.CANCEL_BUTTON' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      class="save-button"
+      (click)="onSave()">
+      <mat-icon>check</mat-icon>
+      {{ 'BRANCHES.DIALOG.SAVE_BUTTON' | translate }}
+    </button>
+  </div>
+</div>

@@ -1,0 +1,244 @@
+<div class="action-detail-container">
+  @if (loading()) {
+    <div class="loading-container">
+      <mat-icon class="loading-spinner">refresh</mat-icon>
+      <p>{{ 'COMMON.LOADING' | translate }}</p>
+    </div>
+  } @else if (actionDetail()) {
+    <!-- Header -->
+    <div class="detail-header">
+      <div class="header-navigation">
+        <button mat-icon-button (click)="onBack()" class="back-button">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div class="header-title">
+          <h1>Acción [{{ actionDetail()!.nombreAccion }}]</h1>
+        </div>
+      </div>
+      <button mat-raised-button color="primary" (click)="onEdit()" class="edit-button">
+        <mat-icon>edit</mat-icon>
+        {{ 'COMMON.EDIT' | translate }}
+      </button>
+    </div>
+
+    <!-- Tabs Content -->
+    <div class="tabs-container">
+      <mat-tab-group class="action-tabs" [selectedIndex]="selectedTabIndex()">
+        <!-- Tab 1: Definición -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="tab-number completed">1</div>
+            {{ 'ACTION_DETAIL.DEFINITION' | translate }}
+          </ng-template>
+          
+          <div class="tab-content">
+            <mat-accordion class="definition-accordion" multi>
+              <!-- Problema -->
+              <mat-expansion-panel [expanded]="true" class="expansion-panel">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <div class="panel-header">
+                      <mat-icon class="panel-icon">error_outline</mat-icon>
+                      <span>{{ 'ACTION_DETAIL.PROBLEM' | translate }}</span>
+                    </div>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="panel-content">
+                  <app-problem-form [problema]="actionDetail()!.problema || ''"></app-problem-form>
+                </div>
+              </mat-expansion-panel>
+
+              <!-- Requisito -->
+              <mat-expansion-panel [expanded]="true" class="expansion-panel">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <div class="panel-header">
+                      <mat-icon class="panel-icon">rule</mat-icon>
+                      <span>{{ 'ACTION_DETAIL.REQUIREMENT' | translate }}</span>
+                    </div>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="panel-content">
+                  <app-requirement-form [requisito]="actionDetail()!.requisito || ''"></app-requirement-form>
+                </div>
+              </mat-expansion-panel>
+
+              <!-- Corrección -->
+              <mat-expansion-panel [expanded]="true" class="expansion-panel">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <div class="panel-header">
+                      <mat-icon class="panel-icon">build</mat-icon>
+                      <span>{{ 'ACTION_DETAIL.CORRECTION' | translate }}</span>
+                    </div>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="panel-content">
+                  <app-correction-table></app-correction-table>
+                </div>
+              </mat-expansion-panel>
+
+              <!-- Análisis de Causa -->
+              <mat-expansion-panel [expanded]="true" class="expansion-panel">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <div class="panel-header">
+                      <mat-icon class="panel-icon">analytics</mat-icon>
+                      <span>{{ 'ACTION_DETAIL.CAUSE_ANALYSIS' | translate }}</span>
+                    </div>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="panel-content">
+                  <app-cause-analysis [analisisDeCausa]="actionDetail()!.analisisCausa || ''"></app-cause-analysis>
+                </div>
+              </mat-expansion-panel>
+
+              <!-- Causa Fundamental -->
+              <mat-expansion-panel [expanded]="true" class="expansion-panel">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <div class="panel-header">
+                      <mat-icon class="panel-icon">psychology</mat-icon>
+                      <span>{{ 'ACTION_DETAIL.ROOT_CAUSE' | translate }}</span>
+                    </div>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="panel-content">
+                  <app-root-cause [causaFundamental]="actionDetail()!.causaFundamental || ''"></app-root-cause>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </mat-tab>
+
+        <!-- Tab 2: Definición (Sin Expander) -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="tab-number">2</div>
+            Definición (Sin Expander)
+          </ng-template>
+          
+          <div class="tab-content tab-with-navigation">
+            <!-- Floating Menu Button -->
+            <button 
+              class="floating-menu-button" 
+              mat-fab 
+              color="primary"
+              (click)="toggleFloatingMenu()"
+              [class.active]="showFloatingMenu()">
+              <mat-icon>{{ showFloatingMenu() ? 'close' : 'menu' }}</mat-icon>
+            </button>
+
+            <!-- Navigation Menu Overlay -->
+            @if (showFloatingMenu()) {
+              <div class="menu-overlay" (click)="toggleFloatingMenu()"></div>
+              <div class="navigation-menu">
+                <h3 class="menu-title">Navegación A8D</h3>
+                @for (section of a8dSections; track section.id) {
+                  <button 
+                    class="menu-item"
+                    [class.active]="activeSection() === section.id"
+                    (click)="scrollToSection(section.id); toggleFloatingMenu()">
+                    <mat-icon>{{ section.icon }}</mat-icon>
+                    <span>{{ section.title }}</span>
+                  </button>
+                }
+              </div>
+            }
+
+            <div class="static-definition-sections">
+              <!-- Problema -->
+              <div id="problema" class="static-section">
+                <div class="section-divider">
+                  <mat-icon class="section-icon">error_outline</mat-icon>
+                  <span class="section-title">{{ 'ACTION_DETAIL.PROBLEM' | translate }}</span>
+                </div>
+                <div class="section-content">
+                  <app-problem-form [problema]="actionDetail()!.problema || ''"></app-problem-form>
+                </div>
+              </div>
+
+              <!-- Requisito -->
+              <div id="requisito" class="static-section">
+                <div class="section-divider">
+                  <mat-icon class="section-icon">rule</mat-icon>
+                  <span class="section-title">{{ 'ACTION_DETAIL.REQUIREMENT' | translate }}</span>
+                </div>
+                <div class="section-content">
+                  <app-requirement-form [requisito]="actionDetail()!.requisito || ''"></app-requirement-form>
+                </div>
+              </div>
+
+              <!-- Corrección -->
+              <div id="correccion" class="static-section">
+                <div class="section-divider">
+                  <mat-icon class="section-icon">build</mat-icon>
+                  <span class="section-title">{{ 'ACTION_DETAIL.CORRECTION' | translate }}</span>
+                </div>
+                <div class="section-content">
+                  <app-correction-table></app-correction-table>
+                </div>
+              </div>
+
+              <!-- Análisis de Causa -->
+              <div id="analisis" class="static-section">
+                <div class="section-divider">
+                  <mat-icon class="section-icon">analytics</mat-icon>
+                  <span class="section-title">{{ 'ACTION_DETAIL.CAUSE_ANALYSIS' | translate }}</span>
+                </div>
+                <div class="section-content">
+                  <app-cause-analysis [analisisDeCausa]="actionDetail()!.analisisCausa || ''"></app-cause-analysis>
+                </div>
+              </div>
+
+              <!-- Causa Fundamental -->
+              <div id="causa-fundamental" class="static-section">
+                <div class="section-divider">
+                  <mat-icon class="section-icon">psychology</mat-icon>
+                  <span class="section-title">{{ 'ACTION_DETAIL.ROOT_CAUSE' | translate }}</span>
+                </div>
+                <div class="section-content">
+                  <app-root-cause [causaFundamental]="actionDetail()!.causaFundamental || ''"></app-root-cause>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+
+        <!-- Tab 3: Implementación -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="tab-number">3</div>
+            {{ 'ACTION_DETAIL.IMPLEMENTATION' | translate }}
+          </ng-template>
+          
+          <div class="tab-content">
+            <app-implementation-table></app-implementation-table>
+          </div>
+        </mat-tab>
+
+        <!-- Tab 4: Informe -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="tab-number">4</div>
+            {{ 'ACTION_DETAIL.REPORT' | translate }}
+          </ng-template>
+          
+          <div class="tab-content">
+            <app-report></app-report>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  } @else {
+    <!-- Error State -->
+    <div class="error-container">
+      <mat-icon class="error-icon">error_outline</mat-icon>
+      <h2>{{ 'ACTION_DETAIL.NOT_FOUND' | translate }}</h2>
+      <p>{{ 'ACTION_DETAIL.NOT_FOUND_MESSAGE' | translate }}</p>
+      <button mat-raised-button color="primary" (click)="onBack()">
+        {{ 'ACTION_DETAIL.BACK_TO_LIST' | translate }}
+      </button>
+    </div>
+  }
+</div>

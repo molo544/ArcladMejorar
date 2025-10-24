@@ -1,0 +1,365 @@
+.form-section {
+  .section-description {
+    margin: 0 0 1.5rem 0;
+    color: #6b7280;
+    line-height: 1.6;
+    font-size: 0.95rem;
+  }
+
+  // Desktop Table
+  .correction-table {
+    margin-top: 1rem;
+    overflow-x: auto;
+
+    .custom-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background-color: #f0fdf4;
+      border-radius: 8px;
+      overflow: hidden;
+
+      thead {
+        tr {
+          th {
+            padding: 1rem;
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #374151;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background-color: #f0fdf4;
+            border-bottom: 1px solid #d1d5db;
+
+            &:first-child {
+              border-top-left-radius: 8px;
+            }
+
+            &:last-child {
+              border-top-right-radius: 8px;
+            }
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          background-color: white;
+          transition: background-color 0.2s ease;
+
+          &:hover {
+            background-color: #f9fafb;
+          }
+
+          &:not(:last-child) {
+            td {
+              border-bottom: 1px solid #e5e7eb;
+            }
+          }
+
+          td {
+            padding: 1rem;
+            font-size: 0.875rem;
+            color: #374151;
+            vertical-align: middle;
+
+            .evidence-link {
+              display: inline-flex;
+              align-items: center;
+              gap: 0.25rem;
+              color: var(--arclad-primary-600);
+              text-decoration: none;
+              transition: color 0.2s ease;
+
+              mat-icon {
+                font-size: 1rem;
+                width: 1rem;
+                height: 1rem;
+              }
+
+              &:hover {
+                color: var(--arclad-primary-700);
+                text-decoration: underline;
+              }
+            }
+
+            .status-badge {
+              display: inline-block;
+              padding: 0.25rem 0.75rem;
+              border-radius: 12px;
+              font-size: 0.75rem;
+              font-weight: 600;
+              text-align: center;
+
+              &.status-completed {
+                background-color: #dcfce7;
+                color: #166534;
+              }
+
+              &.status-progress {
+                background-color: #fef3c7;
+                color: #92400e;
+              }
+
+              &.status-pending {
+                background-color: #f3f4f6;
+                color: #374151;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Mobile Cards
+  .mobile-cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding: 0 0.5rem; // Padding lateral para separar las tarjetas del borde
+
+    .correction-card {
+      background-color: white;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      overflow: hidden;
+      transition: all 0.2s ease;
+      margin-bottom: 0.5rem; // Separación adicional entre tarjetas
+
+      &:hover {
+        border-color: #d1d5db;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        background-color: #f0fdf4;
+        border-bottom: 1px solid #e5e7eb;
+
+        .status-container {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+
+          .status-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+          }
+        }
+
+        .activity-number {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+
+          .number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background-color: var(--arclad-primary-500);
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 700;
+          }
+        }
+
+        .mobile-badge {
+          font-size: 0.75rem !important;
+          padding: 0.25rem 0.75rem !important;
+          border-radius: 12px !important;
+          
+          &.status-completed {
+            background-color: #dcfce7;
+            color: #166534;
+          }
+
+          &.status-progress {
+            background-color: #fef3c7;
+            color: #92400e;
+          }
+
+          &.status-pending {
+            background-color: #f3f4f6;
+            color: #374151;
+          }
+        }
+      }
+
+      .card-content {
+        padding: 1.5rem;
+
+        .card-section {
+          margin-bottom: 1.25rem;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          .section-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+
+            .section-icon {
+              color: var(--arclad-primary-500);
+              font-size: 1rem;
+              width: 1rem;
+              height: 1rem;
+            }
+
+            span {
+              font-size: 0.75rem;
+              font-weight: 600;
+              color: #6b7280;
+              text-transform: uppercase;
+              letter-spacing: 0.05em;
+            }
+          }
+
+          .section-value {
+            margin: 0;
+            font-size: 0.875rem;
+            color: #374151;
+            line-height: 1.5;
+            padding-left: 1.5rem;
+          }
+
+          .mobile-evidence {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--arclad-primary-600);
+            text-decoration: none;
+            padding-left: 1.5rem;
+            font-size: 0.875rem;
+            transition: color 0.2s ease;
+
+            mat-icon {
+              font-size: 1rem;
+              width: 1rem;
+              height: 1rem;
+            }
+
+            &:hover {
+              color: var(--arclad-primary-700);
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1rem;
+      color: #9ca3af;
+      text-align: center;
+
+      mat-icon {
+        font-size: 3rem;
+        width: 3rem;
+        height: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+      }
+
+      p {
+        font-size: 1rem;
+        margin: 0;
+      }
+    }
+  }
+}
+
+// Responsive Logic
+.desktop-only {
+  display: block !important;
+}
+
+.mobile-only {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-only {
+    display: block !important;
+  }
+
+  .form-section {
+    .mobile-cards-container {
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+      padding: 0 0.25rem; // Padding lateral más pequeño en móvil
+
+      .correction-card {
+        margin-bottom: 0.75rem; // Separación entre tarjetas ajustada para móvil
+
+        &:last-child {
+          margin-bottom: 0; // Sin margen en la última tarjeta
+        }
+
+        .card-header {
+          padding: 0.75rem 1rem;
+
+          .activity-number .number {
+            width: 24px;
+            height: 24px;
+            font-size: 0.75rem;
+          }
+        }
+
+        .card-content {
+          padding: 1rem;
+
+          .card-section {
+            margin-bottom: 1rem;
+
+            .section-label {
+              margin-bottom: 0.375rem;
+
+              .section-icon {
+                font-size: 0.875rem;
+                width: 0.875rem;
+                height: 0.875rem;
+              }
+
+              span {
+                font-size: 0.6875rem;
+              }
+            }
+
+            .section-value {
+              font-size: 0.8125rem;
+              padding-left: 1.25rem;
+            }
+
+            .mobile-evidence {
+              padding-left: 1.25rem;
+              font-size: 0.8125rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}

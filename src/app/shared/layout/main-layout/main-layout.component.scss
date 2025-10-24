@@ -1,0 +1,526 @@
+// Variables de color
+$primary-green: #17cf54;
+$sidebar-bg: #ffffff;
+$sidebar-width: 240px;
+$toolbar-height: 64px;
+$border-width: 1px;
+$border-color: #e5e7eb;
+$text-dark: #1f2937;
+$text-gray: #6b7280;
+$hover-bg: #f3f4f6;
+$active-bg: #d1fae5;
+
+.sidenav-container {
+  height: 100vh;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+// Sidebar
+.sidenav {
+  background-color: $sidebar-bg;
+  border-right: $border-width solid $border-color;
+
+  &.mat-drawer-side {
+    width: $sidebar-width;
+  }
+
+  // Forzar que el contenido interno del mat-sidenav use flexbox
+  ::ng-deep .mat-drawer-inner-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .sidebar-header {
+    flex-shrink: 0;
+    height: $toolbar-height;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1.5rem;
+    border-bottom: $border-width solid $border-color;
+
+    .logo {
+      height: 48px;
+      width: auto;
+      max-width: 160px;
+      object-fit: contain;
+    }
+  }
+
+  .sidebar-nav {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 1.5rem 0;
+    min-height: 0;
+
+    // Ocultar scrollbar
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    // Elementos de menú normales
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.875rem 1.5rem;
+      margin: 0.25rem 1rem;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      color: $text-dark;
+
+      &:hover {
+        background-color: $hover-bg;
+      }
+
+      &.active-link {
+        background-color: $active-bg;
+
+        .nav-icon,
+        .nav-label {
+          color: $primary-green;
+        }
+      }
+
+      .nav-icon {
+        color: $text-gray;
+        font-size: 1.375rem;
+        line-height: 1;
+        flex-shrink: 0;
+        user-select: none;
+      }
+
+      .nav-label {
+        color: $text-dark;
+        font-size: 1rem;
+        font-weight: 400;
+        white-space: nowrap;
+      }
+    }
+
+    // Grupo de items con subitems
+    .nav-item-group {
+      display: flex;
+      flex-direction: column;
+      margin: 0.25rem 0;
+
+      .nav-item-parent {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.875rem 1.5rem;
+        margin: 0.25rem 1rem;
+        border-radius: 0.75rem;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        color: $text-dark;
+        min-height: 44px;
+        border: none;
+        background: none;
+        width: calc(100% - 2rem);
+        box-sizing: border-box;
+
+        &:hover {
+          background-color: $hover-bg;
+        }
+
+        // Cuando el menú padre tiene un hijo activo
+        &.has-active-child {
+          .nav-label {
+            font-weight: 700;
+            color: #111827;
+          }
+
+          .nav-icon {
+            color: #111827;
+          }
+        }
+
+        .nav-content {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+        }
+
+        .nav-icon {
+          color: $text-gray;
+          font-size: 1.375rem;
+          line-height: 1;
+          flex-shrink: 0;
+          user-select: none;
+        }
+
+        .nav-label {
+          color: $text-dark;
+          font-size: 1rem;
+          font-weight: 400;
+          text-transform: none;
+          white-space: nowrap;
+        }
+
+        .nav-expand-icon {
+          color: $text-gray;
+          font-size: 1.25rem;
+          line-height: 1;
+          flex-shrink: 0;
+          transition: transform 0.2s ease;
+          user-select: none;
+        }
+      }
+
+      // Subitems
+      .nav-subitems {
+        display: flex;
+        flex-direction: column;
+        padding-left: 1rem;
+
+        .nav-subitem {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          padding: 0.75rem 1.5rem;
+          margin: 0.125rem 1rem;
+          border-radius: 0.5rem;
+          cursor: pointer;
+          text-decoration: none;
+          transition: all 0.2s ease;
+          color: $text-dark;
+
+          &:hover {
+            background-color: $hover-bg;
+          }
+
+          &.active-link {
+            background-color: $active-bg;
+
+            .nav-icon,
+            .nav-label {
+              color: $primary-green;
+            }
+          }
+
+          &.nav-disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+
+            &:hover {
+              background-color: transparent;
+            }
+          }
+
+          .nav-icon {
+            color: $text-gray;
+            font-size: 1.25rem;
+            line-height: 1;
+            flex-shrink: 0;
+            user-select: none;
+          }
+
+          .nav-label {
+            color: $text-dark;
+            font-size: 0.938rem;
+            font-weight: 400;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+
+  .sidebar-footer {
+    flex-shrink: 0;
+    margin-top: auto;
+    padding: 1rem 0 1.5rem 0;
+    border-top: $border-width solid $border-color;
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.875rem 1.5rem;
+      margin: 0 1rem;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      color: $text-dark;
+
+      &:hover {
+        background-color: $hover-bg;
+      }
+
+      &.active-link {
+        background-color: $active-bg;
+
+        .nav-icon,
+        .nav-label {
+          color: $primary-green;
+        }
+      }
+
+      .nav-icon {
+        color: $text-gray;
+        font-size: 1.375rem;
+        line-height: 1;
+        flex-shrink: 0;
+        user-select: none;
+      }
+
+      .nav-label {
+        color: $text-dark;
+        font-size: 1rem;
+        font-weight: 400;
+        white-space: nowrap;
+      }
+    }
+  }
+}
+
+// Contenido principal
+.sidenav-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #f9fafb;
+
+  // Toolbar para mobile
+  .mobile-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0.5rem;
+    min-height: 56px;
+
+    // Grupo izquierdo: botón menú + logo
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex: 0 0 auto;
+      height: 48px;
+
+      > * {
+        height: 48px;
+        display: flex;
+        align-items: center;
+      }
+    }
+
+
+
+    .toolbar-spacer {
+      flex: 1 1 auto;
+    }
+
+    // Grupo derecho: selector idioma + perfil
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      flex: 0 0 auto;
+      height: 48px;
+
+      > * {
+        height: 48px;
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    // Alinear el selector de idioma verticalmente
+    ::ng-deep app-language-selector {
+      display: flex;
+      align-items: center;
+      height: 48px;
+
+      .language-selector {
+        min-width: 110px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+
+        .mat-mdc-form-field {
+          height: 48px;
+          display: flex;
+          align-items: center;
+
+          .mat-mdc-form-field-flex {
+            height: 48px;
+            align-items: center;
+          }
+
+          .mat-mdc-form-field-infix {
+            height: 48px;
+            display: flex;
+            align-items: center;
+            min-height: 48px !important;
+            padding: 0 !important;
+          }
+
+          .mat-mdc-select {
+            height: 48px;
+            display: flex;
+            align-items: center;
+          }
+
+          .mat-mdc-select-trigger {
+            height: 48px;
+            display: flex;
+            align-items: center;
+          }
+        }
+
+        .selected-language {
+          height: 48px !important;
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+
+    // Asegurar que los botones de icono estén alineados
+    .mat-mdc-icon-button {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    // Estilos específicos para elementos del toolbar
+    button[mat-icon-button] {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .mat-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+
+  // Toolbar para desktop
+  .desktop-toolbar {
+    display: flex;
+    align-items: center;
+    height: $toolbar-height;
+    padding: 0 1.5rem;
+    background-color: white;
+    border-bottom: $border-width solid $border-color;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    .toggle-button {
+      margin-right: 1rem;
+    }
+
+    .toolbar-spacer {
+      flex: 1 1 auto;
+    }
+
+    .language-selector-wrapper {
+      margin-right: 1.5rem;
+      display: flex;
+      align-items: center;
+      height: 40px;
+
+      ::ng-deep {
+        app-language-selector {
+          height: 100%;
+          display: flex;
+          align-items: center;
+
+          .language-selector {
+            height: 100%;
+            display: flex;
+            align-items: center;
+          }
+        }
+      }
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: $hover-bg;
+      }
+
+      .user-avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background-color: #d1fae5;
+        color: $primary-green;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.938rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+      }
+
+      .user-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.125rem;
+
+        .user-name {
+          font-size: 0.938rem;
+          font-weight: 600;
+          color: $text-dark;
+          line-height: 1.2;
+        }
+
+        .user-role {
+          font-size: 0.813rem;
+          font-weight: 400;
+          color: $text-gray;
+          line-height: 1.2;
+        }
+      }
+    }
+  }
+
+  // Contenido de las páginas
+  .page-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 2rem;
+  }
+}
+
+// Responsive - Mobile
+@media screen and (max-width: 768px) {
+  .sidenav {
+    width: 280px;
+  }
+
+  .page-content {
+    padding: 1rem !important;
+  }
+}
