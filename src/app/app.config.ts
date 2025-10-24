@@ -16,7 +16,13 @@ export class CustomTranslateLoader implements TranslateLoader {
   constructor(private http: HttpClient) {}
 
   getTranslation(lang: string): Observable<any> {
-    return this.http.get(`./assets/i18n/${lang}.json`);
+    // Get the base href from the document
+    const baseHref = document.querySelector('base')?.getAttribute('href') || '/';
+    // Ensure base href ends with /
+    const normalizedBaseHref = baseHref.endsWith('/') ? baseHref : `${baseHref}/`;
+    const url = `${normalizedBaseHref}assets/i18n/${lang}.json`;
+    console.log('Loading translation from:', url);
+    return this.http.get(url);
   }
 }
 
