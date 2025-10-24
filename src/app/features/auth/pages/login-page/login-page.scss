@@ -68,6 +68,7 @@ $placeholder-light: #4b855f;
 
   .form-container {
     max-width: 420px;
+    position: relative; // Agregado para posicionar reCAPTCHA absolutamente
 
     // Logo móvil - solo visible en pantallas pequeñas
     .mobile-logo {
@@ -232,6 +233,20 @@ $placeholder-light: #4b855f;
           }
         }
       }
+
+      // Simulación de reCAPTCHA
+      .recaptcha-simulation {
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+        z-index: 1000;
+
+        .recaptcha-image {
+          width: 60px;
+          height: auto;
+          opacity: 0.8;
+        }
+      }
     }
   }
 }
@@ -269,6 +284,22 @@ $placeholder-light: #4b855f;
         .recaptcha-placeholder {
           transform: scale(0.88);
           transform-origin: center;
+        }
+
+        // Simulación de reCAPTCHA para mobile: mantener en esquina inferior derecha
+        .recaptcha-simulation {
+          position: fixed !important;
+          bottom: 0.75rem;
+          right: 0.75rem;
+          z-index: 1200;
+
+          .recaptcha-image {
+            /* Tamaño relativo: usa vw para adaptarse a pantallas pequeñas, con un máximo */
+            width: 10vw;
+            max-width: 48px;
+            height: auto;
+            opacity: 0.9;
+          }
         }
       }
     }
