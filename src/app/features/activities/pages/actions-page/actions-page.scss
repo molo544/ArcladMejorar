@@ -528,15 +528,17 @@
       margin: 0 !important;
 
       .card-header {
+        /* En móvil, que el código ocupe toda la fila y el estado vaya en la siguiente */
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
         margin-bottom: 1rem;
 
         .code-section {
-          display: flex;
-          flex-direction: column;
-          gap: 0.25rem;
+          display: block;
+          width: 100%;
+          flex: 1 1 auto;
 
           .code-label {
             font-size: 0.75rem;
@@ -551,14 +553,64 @@
             font-weight: 600;
             color: var(--arclad-primary-600);
             font-size: 0.875rem;
+            display: block;
+            width: 100%;
+            word-break: break-all;
           }
         }
 
         .mobile-chip {
+          /* Mostrar el chip en la fila siguiente; alinearlo a la izquierda */
+          align-self: flex-start;
           flex-shrink: 0;
           font-size: 0.75rem !important;
           height: 20px !important;
           padding: 0.125rem 0.5rem !important;
+        }
+
+        /* Nueva sección para mostrar etiqueta 'ESTADO' junto al chip en móvil */
+        .state-section {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start; /* alinear a la izquierda */
+          gap: 0.5rem;
+          width: 100%;
+
+          .state-label {
+            font-size: 0.75rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+          }
+        }
+
+        /* Cuando se quiera mostrar código y etiqueta en la misma línea */
+        .code-section.inline-code {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+
+          .code-label {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            color: #6b7280;
+            font-weight: 600;
+          }
+
+          .code-sep {
+            color: #6b7280;
+            font-weight: 600;
+          }
+
+          .code-value {
+            display: inline-block;
+            width: auto;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-family: 'Courier New', monospace;
+          }
         }
       }
 

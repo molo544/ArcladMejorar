@@ -27,10 +27,10 @@
         <!-- Tab 1: Definición -->
         <mat-tab>
           <ng-template mat-tab-label>
-            <div class="tab-number completed">1</div>
+            <div class="tab-number" [class.completed]="selectedTabIndex() === 0">1</div>
             {{ 'ACTION_DETAIL.DEFINITION' | translate }}
           </ng-template>
-          
+
           <div class="tab-content">
             <mat-accordion class="definition-accordion" multi>
               <!-- Problema -->
@@ -117,12 +117,12 @@
             <div class="tab-number">2</div>
             Definición (Sin Expander)
           </ng-template>
-          
+
           <div class="tab-content tab-with-navigation">
             <!-- Floating Menu Button -->
-            <button 
-              class="floating-menu-button" 
-              mat-fab 
+            <button
+              class="floating-menu-button"
+              mat-fab
               color="primary"
               (click)="toggleFloatingMenu()"
               [class.active]="showFloatingMenu()">
@@ -133,9 +133,9 @@
             @if (showFloatingMenu()) {
               <div class="menu-overlay" (click)="toggleFloatingMenu()"></div>
               <div class="navigation-menu">
-                <h3 class="menu-title">Navegación A8D</h3>
+                <h3 class="menu-title">Definición</h3>
                 @for (section of a8dSections; track section.id) {
-                  <button 
+                  <button
                     class="menu-item"
                     [class.active]="activeSection() === section.id"
                     (click)="scrollToSection(section.id); toggleFloatingMenu()">
@@ -211,7 +211,7 @@
             <div class="tab-number">3</div>
             {{ 'ACTION_DETAIL.IMPLEMENTATION' | translate }}
           </ng-template>
-          
+
           <div class="tab-content">
             <app-implementation-table></app-implementation-table>
           </div>
@@ -223,7 +223,7 @@
             <div class="tab-number">4</div>
             {{ 'ACTION_DETAIL.REPORT' | translate }}
           </ng-template>
-          
+
           <div class="tab-content">
             <app-report></app-report>
           </div>
